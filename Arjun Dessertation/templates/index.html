@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .product-item {
+            background-color: white;
+            margin: 10px 0;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+        }
+
+        .product-price {
+            font-size: 1.1em;
+            color: #4CAF50;
+        }
+
+        .product-quantity {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-quantity input {
+            padding: 8px;
+            font-size: 1em;
+            width: 50px;
+        }
+
+        .product-quantity label {
+            margin-right: 10px;
+        }
+
+        .add-to-cart-button {
+            padding: 10px 15px;
+            font-size: 1.1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>POS System</h1>
+    <p>Streamline your Retail Operations</p>
+</header>
+
+<div class="container">
+    <h2>Products Available</h2>
+
+    <form action="{{ url_for('add_to_cart') }}" method="POST">
+        <ul class="product-list">
+            {% for product in products %}
+            <li class="product-item">
+                <div class="product-details">
+                    <div class="product-name">{{ product.name }}</div>
+                    <div class="product-price">${{ product.price }}</div>
+                    <div class="product-stock">In Stock: {{ product.stock }}</div>
+                </div>
+                <div class="product-quantity">
+                    <label for="quantity_{{ product.id }}">Quantity:</label>
+                    <input type="number" id="quantity_{{ product.id }}" name="{{ product.id }}" min="0" max="{{ product.stock }}" value="0">
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+    </form>
+
+    <a href="{{ url_for('cart') }}" style="display:block; margin-top: 20px; text-align:center; padding: 10px; background-color:#4CAF50; color:white; border-radius: 5px;">Go to Cart</a>
+</div>
+
+<footer>
+    <p>&copy; 2024 POS System | All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
